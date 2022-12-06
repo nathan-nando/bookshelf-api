@@ -6,7 +6,6 @@ const getBooks = (req, h) => {
   const { name, reading, finished } = req.query;
 
   if (name) {
-    console.log('called name');
     const booksFilteredName = books.filter((book) => book.name.includes(name.toLowerCase()));
     const res = h.response({
       status: 'success',
@@ -17,7 +16,6 @@ const getBooks = (req, h) => {
   }
 
   if (reading) {
-    console.log('call reading');
     const bookFilteredReading = books.filter((book) => book.reading == reading);
     const res = h.response({
       status: 'success',
@@ -28,7 +26,6 @@ const getBooks = (req, h) => {
   }
 
   if (finished) {
-    console.log('call finished');
     const bookFilterFinished = books.filter((book) => book.finished == finished);
     const res = h.response({
       status: 'success',
@@ -78,7 +75,7 @@ const addBook = (req, h) => {
 
   const updatedAt = new Date().toISOString();
 
-  const finished = pageCount === readPage ? 1 : 0;
+  const finished = pageCount === readPage;
 
   const newBooks = {
     id,
@@ -146,7 +143,7 @@ const editBookById = (req, h) => {
 
   const updatedAt = new Date().toISOString();
 
-  const finished = pageCount === readPage ? 1 : 0;
+  const finished = pageCount === readPage;
 
   if (!name) {
     const res = h.response({

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
@@ -5,7 +6,8 @@ const getBooks = (req, h) => {
   const { name, reading, finished } = req.query;
 
   if (name) {
-    const booksFilteredName = books.filter((book) => book.name.includes(name));
+    console.log('called name');
+    const booksFilteredName = books.filter((book) => book.name.includes(name.toLowerCase()));
     const res = h.response({
       status: 'success',
       data: booksFilteredName,
@@ -15,7 +17,8 @@ const getBooks = (req, h) => {
   }
 
   if (reading) {
-    const bookFilteredReading = books.filter((book) => book.reading.includes(reading));
+    console.log('call reading');
+    const bookFilteredReading = books.filter((book) => book.reading == reading);
     const res = h.response({
       status: 'success',
       data: bookFilteredReading,
@@ -25,7 +28,8 @@ const getBooks = (req, h) => {
   }
 
   if (finished) {
-    const bookFilterFinished = books.filter((book) => book.finished.includes(finished));
+    console.log('call finished');
+    const bookFilterFinished = books.filter((book) => book.finished == finished);
     const res = h.response({
       status: 'success',
       data: bookFilterFinished,
@@ -74,7 +78,7 @@ const addBook = (req, h) => {
 
   const updatedAt = new Date().toISOString();
 
-  const finished = pageCount === readPage;
+  const finished = pageCount === readPage ? 1 : 0;
 
   const newBooks = {
     id,
@@ -142,7 +146,7 @@ const editBookById = (req, h) => {
 
   const updatedAt = new Date().toISOString();
 
-  const finished = pageCount === readPage;
+  const finished = pageCount === readPage ? 1 : 0;
 
   if (!name) {
     const res = h.response({
